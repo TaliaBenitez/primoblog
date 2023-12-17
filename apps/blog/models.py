@@ -31,7 +31,6 @@ class Receta(models.Model):
     plato = models.CharField(max_length=255, unique=True)
     url = models.SlugField(max_length=255, unique=True)
     intro = RichTextField()
-    ingredientes = RichTextField()
     preparacion = RichTextField()
     vistas = models.PositiveIntegerField(default=0)
     destacada = models.BooleanField(default=False)
@@ -39,7 +38,7 @@ class Receta(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.PROTECT)
     imagen = models.ImageField(upload_to='receta/imagenes/')
     
-    #visible = models.BooleanField(default=True)
+    visible = models.BooleanField(default=True)
 
     class Status(models.TextChoices):
     
