@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import InicioListView, AboutTemplateView, ContactTemplateView, RecetaDetailView, ComentarioView,CategoriaListView, UserListView, RecetaCreateView
+from .views import InicioListView, NosotrosTemplateView, ContactoTemplateView, RecetaDetailView, ComentarioView,CategoriaListView, UserListView, RecetaCreateView
 
 app_name='apps.blog'
 
@@ -11,13 +11,13 @@ urlpatterns = [
     ),
 
     path(
-        route='about/',
-        view=AboutTemplateView.as_view(),
-        name='about'
+        route='nosotros/',
+        view=NosotrosTemplateView.as_view(),
+        name='nosotros'
     ),
     path(
-        route='contact/',
-        view=ContactTemplateView.as_view(),
+        route='contacto/',
+        view=ContactoTemplateView.as_view(),
         name='contacto'
     ),
     path(

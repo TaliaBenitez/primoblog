@@ -30,7 +30,7 @@ class InicioListView(ListView):
     context_object_name = 'recetas'
     paginate_by = 2
     ordering = ('-creado',)
-    queryset = Receta.objects.filter(visible=True)
+    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -39,12 +39,12 @@ class InicioListView(ListView):
             destacada=True, visible=True)
         return context
     
-class AboutTemplateView(TemplateView):
-    template_name = 'blog/about.html'
+class NosotrosTemplateView(TemplateView):
+    template_name = 'blog/nosotros.html'
 
 
-class ContactTemplateView(TemplateView):
-    template_name = 'blog/contact.html'
+class ContactoTemplateView(TemplateView):
+    template_name = 'blog/contacto.html'
 
 
 class RecetaDetailView(DetailView):

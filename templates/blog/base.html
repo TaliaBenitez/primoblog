@@ -1,0 +1,163 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Talía Benítez">
+  <meta name="author" content="Nicolás Mega">
+  <meta name="author" content="Ian Vañek">
+  <meta name="author" content="Rafael Esteche">
+
+  <link
+    href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap"
+    rel="stylesheet">
+
+  <title>{% block titulo %}Nuestras Comidas{% endblock titulo %}</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+  <!-- Additional CSS Files -->
+  <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/templatemo-stand-blog.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/owl.css' %}">
+  <!--
+
+-->
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="">
+    <!-- Inicio Menú-->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'blog:inicio' %}">
+          <h2>Nuestras Comidas<em>.</em></h2>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+          aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'blog:inicio' %}">Inicio
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'blog:nosotros' %}">Nosotros</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url "blog:contacto" %}">Contacto</a>
+            </li>
+          </ul>
+          
+          <div class="dropdown text-end">
+
+            {% if user.is_authenticated %}
+
+              <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+                {% if user.perfil.imagen and user.perfil.imagen.url %}
+
+                  <img src="{{ user.perfil.imagen.url }}" alt="mdo" width="32" height="32" class="rounded-circle">
+
+                {% else %}
+
+                  <img src="{% static 'assets/images/users/users.jpg' %}" alt="mdo" width="32" height="32" class="rounded-circle">
+
+                {% endif %}
+
+              </a>
+                <ul class="dropdown-menu text-small" style="">
+                    <li><a class="dropdown-item" href="#">Hola {{ user.username|upper }}</a></li>
+
+                    {% if user.groups.all.0.name == 'Colaborador' or user.groups.all.0.name == 'Administrador' %}
+
+                      <li><a class="dropdown-item" href="{% url 'blog:carga_receta' %}">Cargar Receta</a></li>
+                      
+                    {% endif %}
+
+                    <li><a class="dropdown-item" href="#">Perfil</a></li>
+
+                    <li><hr class="dropdown-divider"></li>
+
+                    <li><a class="dropdown-item" href="{% url "auth:salir" %}">Salir</a></li>
+              </ul>
+            {% else %}
+              <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="{% static 'assets/images/users/users.jpg' %}" alt="mdo" width="32" height="32" class="rounded-circle">
+                </a>
+                  <ul class="dropdown-menu text-small" style="">
+                      <li><a class="dropdown-item" href="{% url "auth:login" %}">Entrar</a></li>
+                      <li><a class="dropdown-item" href="{% url "auth:registro" %}">Registrarse</a></li>
+                </ul>
+            {% endif %}
+
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Fin Menú-->
+  </header>
+
+  {% block contenido %}
+  
+  {% endblock contenido %}
+
+    <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <ul class="social-icons">
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">Behance</a></li>
+            <li><a href="#">Linkedin</a></li>
+            <li><a href="#">Dribbble</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-12">
+          <div class="copyright-text">
+            <p>Copyright 2023 Talía Benítez, Nicolás Mega, Ian Vañek y Rafael Esteche
+
+              | Design: <a rel="nofollow" href="https://grupo2.com.ar" target="_parent">Grupo 2</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Additional Scripts -->
+  <script src="{% static 'assets/js/custom.js' %}"></script>
+  <script src="{% static 'assets/js/owl.js' %}"></script>
+  <script src="{% static 'assets/js/slick.js' %}"></script>
+  <script src="{% static 'assets/js/isotope.js' %}"></script>
+  <script src="{% static 'assets/js/accordions.js' %}"></script>
+
+  <script language="text/Javascript">
+    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+    function clearField(t) {                   //declaring the array outside of the
+      if (!cleared[t.id]) {                      // function makes it static and global
+        cleared[t.id] = 1;  // you could use true and false, but that's more typing
+        t.value = '';         // with more chance of typos
+        t.style.color = '#fff';
+      }
+    }
+  </script>
+
+</body>
+
+</html>

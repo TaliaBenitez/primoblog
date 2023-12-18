@@ -1,0 +1,238 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block titulo %}Detalle{% endblock titulo %}
+
+{% block contenido %}
+    <!-- Page Content -->
+    <!-- Banner Starts Here -->
+    <div class="heading-page header-text">
+      <section class="page-heading">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="text-content">
+                <h4>Detalle receta {{ receta }}</h4>
+                <h2>Nuestras Comidas</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="blog-posts grid-system">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="all-blog-posts">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="blog-post">
+                    <div class="blog-thumb">
+                      <img src="{{ receta.imagen.url }}" alt="">
+                    </div>
+                    <div class="down-content">
+                      <!--<span>{{ auto.precio|intcomma }}</span>
+                      <h4>{{ auto.marca_modelo }}</h4> -->
+                      <ul class="post-info">
+                        <li><a href={% url 'blog:user' receta.user %}>{{ receta.user }}</a></li>
+                        <li><a href="#">{{ receta.creado|date:"M Y" }}</a></li>
+                        <li><a href="#">
+                          {% if cantidad_comentarios < 1 %}
+                            {{ cantidad_comentarios }} Comentario 
+                          {% else %}
+                            {{ cantidad_comentarios }} Comentarios
+                          {% endif %}
+                          </a></li>
+                      </ul>
+                      {{ receta.preparacion|safe }}
+                      <div class="post-options">
+                        <div class="row">
+                            {% if user.is_authenticated %}
+                              {% if receta.user|upper == user.username|upper or user.groups.all.0.name == 'Administrador' %}
+                                <div class="col-3">
+                                  <ul class="post-share">
+                                    <li><i class="fa fa-arrow-left"></i></li>
+                                    <li><a href="{% url 'blog:inicio' %}">Volver</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-7">
+                                  <ul class="post-share">
+                                    <li><i class="fa fa-pencil"></i></li>
+                                    <li><a href="#">Editar</a></li>
+                                  </ul>
+                                </div>
+                                <div class="col-2">
+                                  <ul class="post-share">
+                                    <li><i class="fa fa-trash"></i></li>
+                                    <li><a href="#">Eliminar</a></li>
+                                  </ul>
+                                </div>
+                              {% endif %}
+                            {% else %}
+                              <div class="col-3">
+                                <ul class="post-share">
+                                  <li><i class="fa fa-share-alt"></i></li>
+                                  <li><a href="">Facebook</a></li>
+                                </ul>
+                              </div>
+                            {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="sidebar-item comments">
+                    <div class="sidebar-heading">
+                      <h2>
+                        {% if cantidad_comentarios < 1 %}
+                          {{ cantidad_comentarios }} Comentario 
+                        {% else %}
+                          {{ cantidad_comentarios }} Comentarios
+                        {% endif %}
+                      </h2>
+                    </div>
+                    {% for comentario in comentarios %}
+                    <div class="content">
+                      <ul>
+                        <li>
+                          <div class="author-thumb">
+                            {% if comentario.perfil.imagen.url and comentario.perfil.imagen.url%}
+                              <img src="{{ comentario.perfil.imagen.url }}" alt="">
+                            {% else %}
+                              <img src="{% static 'assets/images/users/users.jpg' %}" alt="">  
+                            {% endif %}
+
+                          </div>
+                          <div class="right-content">
+                            <h4>{{ comentario.user.username }}<span>{{ comentario.creado }}</span></h4>
+                            <p>{{ comentario.comentario }}</p>
+                          </div>
+                          <div class="down-content">
+
+                            {% if user.is_authenticated %}
+                              {% if receta.user|upper == user.username|upper or comentario.user|upper == user.username|upper %}
+
+                                <div class="post-options">
+                                  <ul class="post-share">
+                                    <li><i class="fa fa-trash"></i></li>
+                                    <li><a href="#"> Eliminar</a></li>
+                                  </ul>
+                                </div>
+
+                              {% endif %}
+                            {% endif %}
+
+                          </div>
+                        </li>
+                      </ul>
+                      </div>
+                      {% endfor %}
+                  </div>
+                </div>
+                {% if user.is_authenticated %}
+                <div class="col-lg-12">
+                  <div class="sidebar-item submit-comment">
+                    <div class="sidebar-heading">
+                      <h2>Tu comentario</h2>
+                    </div>
+                    <div class="content">
+                      <form method="POST" action="{% url "blog:comentario" %}">
+                        {% csrf_token %}
+                        <div class="row">
+
+                          <input type="hidden" name="url" value="{{receta.url}}" />
+                          <input type="hidden" name="receta" value="{{receta.id}}" />
+                          
+                          <div class="col-lg-12">
+                            <fieldset>
+                              <textarea name="comentario" rows="6" placeholder="Ingresa tu comentario" required=""></textarea>
+                            </fieldset>
+                          </div>
+
+                          <div class="col-lg-12">
+                            <fieldset>
+                              <button type="submit" class="main-button">Enviar</button>
+                            </fieldset>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+          <div class="sidebar">
+            <div class="row">
+              
+              <!-- Inicio Barra Búsqueda -->
+              <div class="col-lg-12">
+                <div class="sidebar-item search">
+                  <form id="search_form" name="gs" method="GET" action="#">
+                    <input type="text" name="q" class="searchText" placeholder="type to search..." autocomplete="on">
+                  </form>
+                </div>
+              </div>
+              <!-- Fin Barra Búsqueda  -->
+
+              <div class="col-lg-12">
+                <div class="sidebar-item recent-posts">
+                  <div class="sidebar-heading">
+                    <h2>Post Recientes</h2>
+                  </div>
+                  <div class="content">
+                    <ul>
+
+                      <!-- Inicio Posts reciente-->
+                      {% for receta in recetas %}
+                        {% if forloop.counter <= 3 %}
+                          <li>
+                            <a href="{% url "blog:detalle" receta.url %}">
+                              <h5>{{ receta.plato }}</h5>
+                              <span>{{ receta.creado }}</span>
+                            </a>
+                          </li>
+                        {% endif %}
+                      {% endfor %}
+                      <!-- Fin Posts reciente-->
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="sidebar-item categories">
+                  <div class="sidebar-heading">
+                    <h2>Categorias</h2>
+                  </div>
+                  <div class="content">
+                    <ul>
+
+                      <!-- Inicio Marcas-->
+                      {% for categoria in categorias %}
+                        <li><a href="{% url 'blog:categoria' categoria.id %}">{{ categoria.nombre }}</a></li>
+                      {% endfor %}
+                      <!-- Fin Marcas-->
+                  
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </div>
+      </div>
+    </section>
+
+{% endblock contenido %}
+
