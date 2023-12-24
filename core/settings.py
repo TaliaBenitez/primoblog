@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG')
+DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
@@ -75,8 +75,12 @@ DATABASES = {
         'PASSWORD': config('BD_PASSWORD'), 
         'HOST': config('BD_HOST'), 
         'PORT': config('BD_PORT'), 
-        }
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+    }
 }
+
 
 
 # Password validation
@@ -114,10 +118,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'static',]
-STATICFILES_FINDERS = [ 
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder', 
-    'django.contrib.staticfiles.finders.FileSystemFinder', 
+
+if DEBUG:
+    STATICFILES_DIRS = BASE_DIR / 'static',
+else:
+    STATIC_ROOT = BASE_DIR / 'static'
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
 ]
 
 # Default primary key field type
@@ -125,8 +134,8 @@ STATICFILES_FINDERS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Media files  
-MEDIA_URL = '/media/' 
+# Media files
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 CKEDITOR_CONFIGS = {
@@ -134,3 +143,7 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'full',
     },
 }
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

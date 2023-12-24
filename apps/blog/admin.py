@@ -11,7 +11,7 @@ class RecetaAdmin(admin.ModelAdmin):
                     'destacada', 'publish', 'imagen','status')
     search_fields = ('plato', 'user__username', 'user__email')
     list_filter = ('creado', 'modificado')
-    list_editable = ('categoria', 'destacada', 'publish','status')
+    list_editable = ('plato','categoria', 'destacada', 'publish','status')
 
     def get_form(self, request, obj=None, **kwargs):
         self.exclude = ('url',)

@@ -38,5 +38,3 @@ class SalirView(LoginRequiredMixin, LogoutView):
     def get(self, request, *args, **kwargs):
         logout(request)
         return redirect(reverse_lazy('auth:login'))
-
-

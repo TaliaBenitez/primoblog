@@ -2,7 +2,7 @@
 {% load static %}
 {% load humanize %}
 
-{% block titulo %}Inicio{% endblock titulo %}
+{% block titulo %}Nuestras Recetas{% endblock titulo %}
 
 {% block contenido %}
 
@@ -22,7 +22,21 @@
                   <span>$ {{ auto.precio|intcomma }}</span>
                 </div> -->
                 <a href="{% url "blog:detalle" receta.url %}">
-                  <h4>{{ receta.categoria }}</h4>
+                  <h4>{{ receta.plato }}</h4>
+                </a>
+                <ul class="post-info">
+                  <li><a href="{% url "blog:user" receta.user %}">{{ receta.user }}</a></li>
+                  <li><a href="#">{{ receta.creado|date:"M Y" }}</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="fondo-item item-content">
+              <div class="main-content">
+                <!--<div class="meta-category">
+                  <span>$ {{ auto.precio|intcomma }}</span>
+                </div> -->
+                <a href="{% url "blog:detalle" receta.url %}">
+                  <h4>{{ receta.plato }}</h4>
                 </a>
                 <ul class="post-info">
                   <li><a href="{% url "blog:user" receta.user %}">{{ receta.user }}</a></li>
@@ -52,11 +66,12 @@
                     <div class="blog-thumb">
                       <img src="{{ receta.imagen.url }}" alt="">
                     </div>
-                    <div class="down-content">
+                    <div class="receta-contenido down-content">
                       <!--<span>{{ auto.precio|intcomma }}</span> -->
                       <a href="{% url "blog:detalle" receta.url %}">
-                        <h4>{{ receta.categoria }}</h4>
+                        <h4>{{ receta.plato }}</h4>
                       </a>
+                      <p>{{ receta.intro|safe }}</p>
                       <ul class="post-info">
                         <li><a href="{% url "blog:user" receta.user %}">{{ receta.user }}</a></li>
                         <li><a href="#">{{ receta.creado|date:"M Y" }}</a></li>
@@ -75,13 +90,13 @@
                                 <div class="col-7">
                                   <ul class="post-share">
                                     <li><i class="fa fa-pencil"></i></li>
-                                    <li><a href="#">Editar</a></li>
+                                    <li><a href="{% url "blog:actualizar_receta" receta.url %}">Editar</a></li>
                                   </ul>
                                 </div>
                                 <div class="col-2">
                                   <ul class="post-share">
                                     <li><i class="fa fa-trash"></i></li>
-                                    <li><a href="#">Eliminar</a></li>
+                                    <li><a href="{% url "blog:eliminar_receta" receta.url %}">Eliminar</a></li>
                                   </ul>
                                 </div>
                               {% endif %}
@@ -155,7 +170,7 @@
                         {% if forloop.counter <= 3 %}
                           <li>
                             <a href="{% url "blog:detalle" receta.url %}">
-                              <h5>{{ receta.titulo }}</h5>
+                              <h5>{{ receta.plato }}</h5>
                               <span>{{ receta.creado }}</span>
                             </a>
                           </li>
@@ -178,7 +193,7 @@
 
                       <!-- Inicio Marcas-->
                       {% for categoria in categorias %}
-                        <li><a href="{% url "agencia:categoria" categoria.id %}">{{ categoria.nombre }}</a></li>
+                        <li><a href="{% url "blog:categoria" categoria.id %}">{{ categoria.nombre }}</a></li>
                       {% endfor %}
                       <!-- Fin Marcas-->
                   

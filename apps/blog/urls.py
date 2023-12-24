@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import InicioListView, NosotrosTemplateView, ContactoTemplateView, RecetaDetailView, ComentarioView,CategoriaListView, UserListView, RecetaCreateView
+from .views import InicioListView, NosotrosTemplateView, ContactoTemplateView, RecetaDeleteView, RecetaDetailView, ComentarioView,CategoriaListView, UserListView, RecetaCreateView, RecetaUpdateView
 
 app_name='apps.blog'
 
@@ -44,5 +44,15 @@ urlpatterns = [
         route='user/<str:nombre>/',
         view=UserListView.as_view(),
         name='user'
+    ),
+    path(
+        route='eliminar_receta/<slug:url>/',
+        view=RecetaDeleteView.as_view(),
+        name='eliminar_receta'
+    ),
+    path(
+        route='actualizar_receta/<slug:url>/',
+        view=RecetaUpdateView.as_view(),
+        name='actualizar_receta'
     ),
 ]

@@ -33,7 +33,7 @@
                     <div class="blog-thumb">
                       <img src="{{ receta.imagen.url }}" alt="">
                     </div>
-                    <div class="down-content">
+                    <div class="receta-contenido down-content">
                       <!--<span>{{ auto.precio|intcomma }}</span>
                       <h4>{{ auto.marca_modelo }}</h4> -->
                       <ul class="post-info">
@@ -111,7 +111,7 @@
                             <h4>{{ comentario.user.username }}<span>{{ comentario.creado }}</span></h4>
                             <p>{{ comentario.comentario }}</p>
                           </div>
-                          <div class="down-content">
+                          <div class="receta-contenido down-content">
 
                             {% if user.is_authenticated %}
                               {% if receta.user|upper == user.username|upper or comentario.user|upper == user.username|upper %}

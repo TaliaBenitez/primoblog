@@ -7,7 +7,8 @@ class Perfil(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT)
     imagen = models.ImageField(
         upload_to='users/imagenes',
-        default='users/imagenes/users.jpg'
+        blank=True,
+        null=True
     )
     modificado = models.DateTimeField(auto_now=True)
 

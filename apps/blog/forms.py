@@ -1,6 +1,6 @@
 from django import forms
 from ckeditor.widgets import CKEditorWidget
-from .models import Comentario, Receta, Categoria
+from .models import Comentario, Receta, Categoria, Contacto
 
 
 class CrearComentarioForm(forms.ModelForm):
@@ -37,6 +37,47 @@ class RecetaForm(forms.ModelForm):
         queryset=Categoria.objects.all(),
         widget=forms.Select(attrs={'class': 'form-control'})
     )
-    status = forms.BooleanField(
+    visible = forms.BooleanField(
+        required=False,
         widget=forms.CheckboxInput()
+    )
+
+
+
+class ContactoForm(forms.ModelForm):
+    class Meta:
+        model = Contacto
+        fields = ('nombre', 'email', 'asunto', 'mensaje')
+
+    nombre = forms.CharField(
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Nombre y Apellido'}
+        )
+    )
+    email = forms.EmailField(
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Email'}
+        )
+    )
+    asunto = forms.CharField(
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Asunto'}
+        )
+    )
+    mensaje = forms.CharField(
+        required=True,
+        widget=forms.Textarea(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Mensaje'}
+        )
     )

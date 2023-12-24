@@ -32,8 +32,8 @@ class RegistroForm(forms.Form):
 
     def clean(self):
         data = super().clean()
-        password = data['password']
-        password_confirmation = data['password_confirmation']
+        password = data.get('password')
+        password_confirmation = data.get('password_confirmation')
 
         if password != password_confirmation:
             raise forms.ValidationError('Las contraseñas no coinciden.')
