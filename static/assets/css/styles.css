@@ -16,7 +16,7 @@
 
 .main-content::after {
     content: "";
-    background-color: rgba(180, 170, 170, 0.3);
+    background-color: rgba(0,0,0,.075);
     width: 100%;
     height: 100%;
     top: 0;

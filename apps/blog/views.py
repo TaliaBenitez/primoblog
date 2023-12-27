@@ -157,6 +157,18 @@ class ComentarioView(UserPassesTestMixin, View):
             return redirect('blog:detalle', url=url)
         else:
             return HttpResponse(status=500)
+        
+class ComentarioDeleteView(UserPassesTestMixin, DeleteView):
+    model = Comentario
+    login_url = reverse_lazy('auth:login')
+
+    def test_func(self):
+        grupos = ['Administrador']
+        return self.request.user.is_authenticated and any(self.request.user.groups.filter(name=grupo).exists() for grupo in grupos) or self.request.user == self.get_object().user
+
+    def get_success_url(self):
+        url = self.object.receta.url
+        return reverse_lazy('blog:detalle', kwargs={'url': url})
 
 
 class CategoriaListView(ListView):

@@ -1,7 +1,7 @@
 {% extends "blog/base.html" %}
 {% load static %}
 
-{% block titulo %}Registro OK{% endblock titulo %}
+{% block titulo %}Coment OK{% endblock titulo %}
 
 {% block contenido %}
 
@@ -12,8 +12,8 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="text-content">
-                <h4>Eliminar Auto {{ object.categoria }}</h4>
-                <h2>Cucinare</h2>
+                <h4>Cucinare {{ object.receta.plato }}</h4>
+                <h2>Eliminar Comentario </h2>
               </div>
             </div>
           </div>
@@ -23,7 +23,7 @@
     
     <!-- Banner Ends Here -->
 
-    <section class="vh-100" style="background-color: #eee;">
+    <section class="vh-100" style="background-color: #409db9;">
         <div class="container h-100">
           <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-lg-12 col-xl-11">
@@ -32,9 +32,9 @@
                   <div class="row justify-content-center">
                     <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
       
-                        <p>¿Estás seguro de que deseas eliminar "{{ object.plato }}"?</p>
+                        <p>¿Estás seguro de que deseas eliminar "{{ object.comentario }}"?</p>
 
-                      <form class="mx-1 mx-md-4" method="POST">
+                      <form class="mx-1 mx-md-4" method="post" action="{% url 'blog:eliminar_comentario' pk=object.pk %}">
                         {% csrf_token %}
       
                         {% if form.errors %}
@@ -53,7 +53,7 @@
                         {% endif %}
       
                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                          <a class="btn btn-danger btn-lg" href="{% url "blog:detalle" object.url %}">Cancelar</a>
+                          <a class="btn btn-danger btn-lg" href="{% url 'blog:detalle' url=object.receta.url %}">Cancelar</a>
                           <button type="submit" class="btn btn-primary btn-lg">Eliminar</button>
                         </div>
       
@@ -62,7 +62,7 @@
                     </div>
                     <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
       
-                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                      <img src="{%static 'assets/images/papelera-de-reciclaje.png' %}"
                         class="img-fluid" alt="Sample image">
       
                     </div>

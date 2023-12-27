@@ -10,15 +10,11 @@
   <meta name="description" content="">
   <meta name="author" content="Talía Benítez">
   <meta name="author" content="Nicolás Mega">
-  <meta name="author" content="Ian Vañek">
-  <meta name="author" content="Rafael Esteche">
+  
 
-  <link
-    href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap"
-    rel="stylesheet">
+  <link rel="icon" href="{% static 'assets/images/bandeja.svg' %}">
 
-  <title>{% block titulo %}Nuestras Comidas{% endblock titulo %}</title>
-
+  <title>{% block titulo %}Cucinare{% endblock titulo %}</title>
   <!-- Bootstrap core CSS -->
   <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -40,7 +36,7 @@
     <nav class="navbar navbar-expand-lg">
       <div class="container">
         <a class="navbar-brand" href="{% url 'blog:inicio' %}">
-          <h2>Nuestras Comidas<em>.</em></h2>
+          <h2>Cucinare<em>.</em></h2>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
           aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
