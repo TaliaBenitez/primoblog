@@ -638,7 +638,7 @@ ul.page-numbers li a:hover {
 
 .blog-posts .comments ul li .right-content h4 span {
 	font-size: 14px;
-	color: #aaa;
+	color: #ffffff;
 	font-weight: 400;
 	letter-spacing: 0.25px;
 	margin-left: 20px;
@@ -655,7 +655,7 @@ ul.page-numbers li a:hover {
 	font-size: 13px;
 	text-transform: uppercase;
 	font-weight: 500;
-	color: #7a7a7a;
+	color: #ffffff;
 	outline: none;
 	padding: 0px 15px;
 	margin-bottom: 30px;
@@ -668,7 +668,7 @@ ul.page-numbers li a:hover {
 	font-size: 13px;
 	text-transform: uppercase;
 	font-weight: 500;
-	color: #7a7a7a;
+	color: #ffffff;
 	outline: none;
 	padding: 10px 15px;
 	margin-bottom: 30px;
@@ -680,7 +680,7 @@ ul.page-numbers li a:hover {
 
 .blog-posts .submit-comment input::placeholder,
 .blog-posts .submit-comment textarea::placeholder {
-	color: #aaa;
+	color: #ffffff;
 }
 
 .blog-posts .submit-comment button {
